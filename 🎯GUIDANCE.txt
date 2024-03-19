@@ -1,0 +1,10 @@
+
+CLONE AIRNB ~ Belajar MongoDB ~ Persiapan magang
+"Mini version Booking App"
+Fitur : 
+- display all booking (without login)
+- enter every detail desc
+- save favorite place
+
+sc : https://github.com/AntonioErdeljac/next13-airbnb-clone
+yt : https://www.youtube.com/watch?v=c_-b_isI4vg&t=33s
