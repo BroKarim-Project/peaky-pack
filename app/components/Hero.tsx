@@ -1,23 +1,49 @@
-// Di bawah suitable option nanti hasil pencarian
-
-//sedangkan di bagian satu lagi itu bukan hasil pencarian namun memnag default dari kita, dan bagian ini juga yang bakal di tampilin di gambar waktu di tekan detail
-
-/*
-MASLAH 
-- white space banyak itu karena kita g set overflow-y-hidden
-- maslahnya kita g bisa pake stcicky klo ada fle atau overflow-hidden
-
-- masah g atu caranya , padaha dh coba min-h atau max-h
-- g tau apa yg terjadi klo ada kontent tambaha 
-
-*/
+'use client';
 import TodayDate from './TodayDate';
+import React from 'react';
+import { CardDetail, CardPreview } from './Card';
+import HotelData from './hotelData';
+import { useState, useEffect } from 'react';
+import { Hotel } from '@/types/hotel';
 
 const Hero = () => {
+  const [searchLocation, setSearchLocation] = useState('bali');
+  const [searchResult, setSearchResult] = useState<Hotel[]>([]);
+  const [notFound, setNotFound] = useState(false);
+  const [currentHotelImg, setCurrentHotelImg] = useState<string>('https://images.unsplash.com/photo-1602693680203-a01c07f9dfae?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+
+  const changeImage = (newHotelData: Hotel) => {
+    setCurrentHotelImg(newHotelData.img);
+  };
+
+  //set default card in bali
+  useEffect(() => {
+    const defaultResult = HotelData.filter((hotel) => hotel.location.toLowerCase() === 'bali');
+    setSearchResult(defaultResult.slice(0, 3));
+  }, []);
+
+  //display card where location === seach, and just display 3 data
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const result = HotelData.filter((hotel) => hotel.location.toLowerCase() === searchLocation.toLowerCase());
+    // setSearchResult(result.slice(0, 3));
+    if (result.length > 0) {
+      setNotFound(false); // Reset notFound state if results are found
+      setSearchResult(result.slice(0, 3));
+    } else {
+      setNotFound(true); // Set notFound state to true if no results are found
+      setSearchResult([]); // Clear search result
+    }
+  };
+
+  //search locatipn
+  const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchLocation(e.target.value);
+  };
   return (
     <div className="relative bg-white my-4 w-full rounded-md items-center h-full  px-6 ">
       {/* booking */}
-      <div className="relative -left-2 bg-[#f4f6f9] rounded-md w-full md:w-2/3 py-2 h-auto overflow-y-hidden ">
+      <div className="relative -left-2 bg-[#f4f6f9] h-[120vh] rounded-md w-full md:w-2/3 py-2  overflow-y-scroll scroll-container">
         <div className="flex flex-wrap flex-col gap-2">
           <div className="mx-4 ">
             <div className="w-full flex justify-between items-center">
@@ -39,13 +65,15 @@ const Hero = () => {
               </ul>
               <TodayDate />
             </div>
-            <div className="mt-4 w-full sm:mx-auto lg:mx-0">
-              <div className="gap-1 flex ">
+            <div className="mt-2 w-full sm:mx-auto lg:mx-0">
+              <form className="gap-1 flex " onSubmit={handleSearch}>
                 <div className="rounded-l-lg  flex flex-col py-2  text-black">
                   <label className="py-2 text-[10px] ">City or Hotel</label>
                   <input
                     className="peer w-full h-full bg-white text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200  border focus:border-2  text-sm px-3 py-2 rounded-[7px] border-blue-gray-200 focus:border-gray-900"
                     placeholder="Hotel"
+                    value={searchLocation}
+                    onChange={handleLocationChange}
                   />
                 </div>
                 <div className="rounded-l-lg  flex flex-col py-2  text-black">
@@ -82,117 +110,42 @@ const Hero = () => {
                     Search
                   </button>
                 </div>
-              </div>
+              </form>
             </div>
 
-            <div className="w-full sm:mx-auto lg:mx-0 mt-4">
+            <div className="w-full sm:mx-auto lg:mx-0 ">
               <div>
-                <p className="text-2xl text-gray-900 font-semibold pt-2">Suitable options</p>
+                <p className="text-xl text-gray-900 font-semibold pt-2">Suitable options</p>
                 <span className="text-black text-sm">Recomenned hotel in area</span>
               </div>
               <div className="grid gap-2 md:grid-cols-3">
-                <div className="group relative m-0 flex h-56 w-56 rounded-xl shadow-xl border-2 border-white sm:mx-auto sm:max-w-lg">
-                  <div className="z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200 opacity-80 transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 dark:opacity-70">
-                    <img
-                      src="https://images.unsplash.com/photo-1506187334569-7596f62cf93f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3149&q=80"
-                      className="animate-fade-in block h-full w-full  scale-100 transform object-cover object-center opacity-100 transition duration-300 group-hover:scale-110"
-                      alt=""
-                    />
-                  </div>
-                  <div className="absolute bottom-0 z-20 m-0 pb-4 ps-4 transition duration-300 ease-in-out group-hover:-translate-y-1 group-hover:translate-x-3 group-hover:scale-110">
-                    <h1 className="font-serif text-2xl font-bold text-white shadow-xl">Azores</h1>
-                    <h1 className="text-sm font-light text-gray-200 shadow-xl">A Little Paradise in Portugal</h1>
-                  </div>
-                </div>
-                <div className="group relative m-0 flex h-56 w-56 rounded-xl shadow-xl border-2 border-white sm:mx-auto sm:max-w-lg">
-                  <div className="z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200 opacity-80 transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 dark:opacity-70">
-                    <img
-                      src="https://images.unsplash.com/photo-1506187334569-7596f62cf93f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3149&q=80"
-                      className="animate-fade-in block h-full w-full  scale-100 transform object-cover object-center opacity-100 transition duration-300 group-hover:scale-110"
-                      alt=""
-                    />
-                  </div>
-                  <div className="absolute bottom-0 z-20 m-0 pb-4 ps-4 transition duration-300 ease-in-out group-hover:-translate-y-1 group-hover:translate-x-3 group-hover:scale-110">
-                    <h1 className="font-serif text-2xl font-bold text-white shadow-xl">Azores</h1>
-                    <h1 className="text-sm font-light text-gray-200 shadow-xl">A Little Paradise in Portugal</h1>
-                  </div>
-                </div>
-                <div className="group relative m-0 flex h-56 w-56 rounded-xl shadow-xl border-2 border-white sm:mx-auto sm:max-w-lg">
-                  <div className="z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200 opacity-80 transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 dark:opacity-70">
-                    <img
-                      src="https://images.unsplash.com/photo-1506187334569-7596f62cf93f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3149&q=80"
-                      className="animate-fade-in block h-full w-full  scale-100 transform object-cover object-center opacity-100 transition duration-300 group-hover:scale-110"
-                      alt=""
-                    />
-                  </div>
-                  <div className="absolute bottom-0 z-20 m-0 pb-4 ps-4 transition duration-300 ease-in-out group-hover:-translate-y-1 group-hover:translate-x-3 group-hover:scale-110">
-                    <h1 className="font-serif text-2xl font-bold text-white shadow-xl">Azores</h1>
-                    <h1 className="text-sm font-light text-gray-200 shadow-xl">A Little Paradise in Portugal</h1>
-                  </div>
-                </div>
+                {/* {HotelData.slice(0, 3).map((hotel, index) => (
+                  <CardPreview key={index} hotel={hotel} />
+                ))} */}
 
-                {/* card 2 */}
+                {notFound ? <p className=" text-black my-10">Hotel not found ...</p> : searchResult.map((hotel, index) => <CardPreview key={index} hotel={hotel} />)}
               </div>
-              {/* isinya */}
             </div>
 
             {/* bagian filter, jika ditekan akan nampilin gambar */}
-            <div className="w-full sm:mx-auto lg:mx-0 mt-4">
+            <div className="w-full sm:mx-auto lg:mx-0 mt-2">
               <div>
-                <p className="text-2xl text-gray-900 font-semibold pt-2">Our Recomendation</p>
+                <p className="text-xl text-gray-900 font-semibold pt-2">Our Recomendation</p>
                 <span className="text-black text-sm">Recomenned hotel in area</span>
               </div>
               <div className="grid  gap-2  md:grid-cols-2  ">
-                {/* card 1 */}
-                <div className="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl  px-3 max-w-xs  border border-white bg-white">
-                  <div className="w-full md:w-1/3 bg-white grid place-items-center">
-                    <img src="https://images.pexels.com/photos/4381392/pexels-photo-4381392.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="tailwind logo" className="rounded-xl " />
-                  </div>
-                  <div className="w-full md:w-2/3 bg-white flex flex-col space-y-2 p-3">
-                    <h3 className="font-black text-gray-800  text-base">The Majestic and Wonderful Bahamas</h3>
-
-                    <p className="text-xl font-black text-gray-800">
-                      $110
-                      <span className="font-normal text-gray-600 text-base">/night</span>
-                    </p>
-                  </div>
-                </div>
-                {/* card 2 */}
-                <div className="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl  px-3 max-w-xs   border border-white bg-white">
-                  <div className="w-full md:w-1/3 bg-white grid place-items-center">
-                    <img src="https://images.pexels.com/photos/4381392/pexels-photo-4381392.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="tailwind logo" className="rounded-xl " />
-                  </div>
-                  <div className="w-full md:w-2/3 bg-white flex flex-col space-y-2 p-3">
-                    <h3 className="font-black text-gray-800  text-base">The Majestic and Wonderful Bahamas</h3>
-
-                    <p className="text-xl font-black text-gray-800">
-                      $110
-                      <span className="font-normal text-gray-600 text-base">/night</span>
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl  px-3 max-w-xs   border border-white bg-white">
-                  <div className="w-full md:w-1/3 bg-white grid place-items-center">
-                    <img src="https://images.pexels.com/photos/4381392/pexels-photo-4381392.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="tailwind logo" className="rounded-xl " />
-                  </div>
-                  <div className="w-full md:w-2/3 bg-white flex flex-col space-y-2 p-3">
-                    <h3 className="font-black text-gray-800  text-base">The Majestic and Wonderful Bahamas</h3>
-
-                    <p className="text-xl font-black text-gray-800">
-                      $110
-                      <span className="font-normal text-gray-600 text-base">/night</span>
-                    </p>
-                  </div>
-                </div>
+              {HotelData.slice(0, 3).map((hotel, index) => (
+                  <CardDetail key={index} hotel={hotel} onDetailClick={changeImage} />
+                ))}
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* gambar hotel */}
-      <div className="bg-red-600 sticky bottom-0 left-[100%] rounded-md w-full top-0 md:w-1/3 h-screen">
-        <img src="https://source.unsplash.com/7H77FWkK_x4/1600x900" className="h-full object-cover rounded-md w-full" alt="" />
+      {/* gambar hotel =>sebelumnya pake sticky dan h-auoto klo g salah */}
+      <div className="bg-white absolute bottom-0 right-1 rounded-md w-full top-0 md:w-1/3 h-[120vh]">
+        <img src={currentHotelImg} className="h-full object-cover rounded-md w-full" alt="" />
       </div>
     </div>
   );

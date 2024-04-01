@@ -21,6 +21,28 @@ body {
   
 }
 
+.scroll-container {
+  position: relative;
+  left: -2px;
+  background-color: #f4f6f9;
+  height: 120vh; /* Adjust height as needed */
+  width: 100%;
+  max-width: 66.666%; /* Equivalent to md:w-2/3 */
+  padding-top: 2px; /* Adjust padding as needed */
+  overflow-y: scroll;
+}
+
+/* Hide scrollbar for Firefox */
+.scroll-container {
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for WebKit browsers */
+.scroll-container::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
