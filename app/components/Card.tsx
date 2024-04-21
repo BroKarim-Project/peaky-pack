@@ -1,3 +1,6 @@
+// Tinggal rapikan ukuran card dan font di file ni aja untuk mozilla dan chrome
+// baru push bersi rapinya
+
 import { Hotel } from '@/types/hotel';
 
 interface Props {
@@ -9,7 +12,7 @@ const CardPreview = ({ hotel }: { hotel: Hotel }) => {
 
   return (
     <div className="group relative flex h-40 w-56 rounded-xl shadow-xl border-2 border-white sm:mx-auto sm:max-w-lg">
-      <div className="z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200 opacity-80 transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 dark:opacity-70">
+      <div className="z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200  transition duration-300 ease-in-out group-hover:brightness-100 brightness-50 dark:border-gray-700 dark:opacity-70">
         <img src={img} className="animate-fade-in block h-full w-full  scale-100 transform object-cover object-center opacity-100 transition duration-300 group-hover:scale-110" alt="" />
       </div>
       <div className="absolute bottom-0 z-20 m-0 pb-4 ps-4 transition duration-300 ease-in-out group-hover:-translate-y-1 group-hover:translate-x-3 group-hover:scale-110">
@@ -44,11 +47,11 @@ const CardDetail: React.FC<Props> = ({ hotel, onDetailClick }) => {
     onDetailClick(hotel);
   };
   return (
-    <div className="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl  px-3 max-w-xs  border border-white bg-white">
-      <div className="w-full md:w-1/3 bg-white grid place-items-center">
-        <img src={img} alt="tailwind logo" className="rounded-sm object-cover object-center" />
+    <div className=" flex flex-col md:flex-row   md:space-y-0 rounded-xl   sm:mx-auto sm:max-w-lg  border border-white bg-white">
+      <div className="w-full md:w-1/3 h-full bg-white grid place-items-center">
+        <img src={img} alt="tailwind logo" className="rounded-sm object-cover h-full object-center" />
       </div>
-      <div className="w-full md:w-2/3 bg-white flex flex-col space-y-2 p-3">
+      <div className="w-full md:w-2/3 bg-white flex flex-col  p-3">
         <h3 className="font-medium text-gray-800  text-sm">{name}</h3>
         <div className="flex  items-center">
           <svg width="15px" height="15px" viewBox="0 0 24 24" fill="#AEDEFC" xmlns="http://www.w3.org/2000/svg">
@@ -65,10 +68,10 @@ const CardDetail: React.FC<Props> = ({ hotel, onDetailClick }) => {
               ></path>{' '}
             </g>
           </svg>
-          <p className="text-sm font-[10px] text-black shadow-xl">{star}</p>
+          <p className="text-[10px] font-[10px] text-black shadow-xl">{star}</p>
         </div>
         <div className="flex justify-between items-center">
-          <p className="text-base font-bold text-gray-800">
+          <p className="text-xs font-bold text-gray-800">
             ${price}
             <span className="font-normal text-gray-600 text-[10px]">/night</span>
           </p>
