@@ -1,5 +1,3 @@
-// Tinggal rapikan ukuran card dan font di file ni aja untuk mozilla dan chrome
-// baru push bersi rapinya
 
 import { Hotel } from '@/types/hotel';
 
@@ -42,8 +40,6 @@ const CardPreview = ({ hotel }: { hotel: Hotel }) => {
 const CardDetail: React.FC<Props> = ({ hotel, onDetailClick }) => {
   const { name, img, star, price } = hotel;
   const handleClick = () => {
-    // Panggil prop fungsi ketika tombol detail ditekan
-    // Sertakan data hotel sebagai argumen
     onDetailClick(hotel);
   };
   return (

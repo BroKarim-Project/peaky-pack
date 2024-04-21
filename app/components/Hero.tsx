@@ -127,7 +127,7 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* bagian filter, jika ditekan akan nampilin gambar */}
+          
           <div className="w-full sm:mx-auto lg:mx-0 ">
             <div>
               <p className="text-lg text-gray-900 font-semibold pt-2">Our Recomendation</p>
@@ -142,7 +142,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* gambar hotel =>sebelumnya pake sticky dan h-auoto klo g salah */}
+      
       <div className="bg-white absolute bottom-0 right-1 rounded-md w-full top-0 md:w-1/3 h-[100vh]">
         <img src={currentHotelImg} className="h-full object-cover rounded-md w-full" alt="" />
       </div>
@@ -152,7 +152,3 @@ const Hero = () => {
 
 export default Hero;
 
-/*
-
-
-*/
