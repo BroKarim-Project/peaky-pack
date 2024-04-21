@@ -43,7 +43,7 @@ const Hero = () => {
   return (
     <div className="relative bg-white my-4  rounded-md items-center   px-6 ">
       {/* booking */}
-      <div className="relative -left-2 bg-[#f4f6f9] h-[100vh] flex flex-col overflow-hidden gap-2 2xl:gap-4 flex-wrap  rounded-md  md:w-2/3 py-2 ">
+      <div className="relative -left-2 bg-[#f4f6f9] h-[100vh] flex flex-col overflow-y-scroll gap-2 2xl:gap-4 flex-wrap  rounded-md  md:w-2/3 py-2 ">
         <div className="mx-4 gap-2 2xl:gap-4">
           <div className="w-full flex justify-between items-center">
             <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 dark:text-gray-400">
